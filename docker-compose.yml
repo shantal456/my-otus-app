@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  app:
+    image: 'my-otus-app'
+    build:
+      context: .
+    container_name: my-otus-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/otus
+      - SPRING_LIQUIBASE_URL=jdbc:postgresql://db:5432/otus
+      - SPRING_DATASOURCE_USERNAME=otus
+      - SPRING_DATASOURCE_PASSWORD=12341234
+
+  db:
+    image: 'postgres:latest'
+    container_name: db
+    environment:
+      - POSTGRES_USER=otus
+      - POSTGRES_PASSWORD=12341234
+      - POSTGRES_DB=otus
+      - PGPORT=5432
